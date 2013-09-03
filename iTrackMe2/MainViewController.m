@@ -361,7 +361,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 -(BOOL)pushObject:(Location *)location
 {
     // construct url and send it to server
-    // /trackme/requests.php?a=upload&u=wgonzalez&p=wfpdubai&lat=25.18511038&long=55.29178735&do=2011-2-3%2013:12:3&tn=wgonzalez&alt=7&ang=&sp=&db=8
+    // /trackme/requests.php?a=upload&u=wgonzalez&p=wfpdubai&lat=25.18511038&long=55.29178735&do=2011-2-3%2013:12:3&tn=wgonzalez&alt=7&ang=&sp=&acc&db=8
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
@@ -385,7 +385,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     NSURLRequest *theRequest=[
                               NSURLRequest requestWithURL:serverUrl
                                               cachePolicy:NSURLCacheStorageNotAllowed
-                                          timeoutInterval:5
+                                          timeoutInterval:2
                               ];
     NSError *error = nil;
     NSURLResponse  *response = nil;
