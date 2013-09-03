@@ -1,24 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3394" systemVersion="12E55" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Icons" representedClassName="Icons">
-        <attribute name="IconID" optional="YES" attributeType="String"/>
+        <attribute name="IconID" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <userInfo/>
     </entity>
     <entity name="Location" representedClassName="Location">
-        <attribute name="Altitude" optional="YES" attributeType="Double" defaultValueString="0.0"/>
-        <attribute name="Angle" optional="YES" attributeType="Double" defaultValueString="0.0"/>
-        <attribute name="Comment" optional="YES" attributeType="String"/>
-        <attribute name="DateOccured" optional="YES" attributeType="Date"/>
-        <attribute name="IconID" optional="YES" attributeType="String"/>
-        <attribute name="Latitude" optional="YES" attributeType="Double" defaultValueString="0.0"/>
-        <attribute name="Longitude" optional="YES" attributeType="Double" defaultValueString="0.0"/>
-        <attribute name="Speed" optional="YES" attributeType="Double" defaultValueString="0.0"/>
-        <attribute name="TripID" optional="YES" attributeType="String"/>
-        <attribute name="uploaded" optional="YES" attributeType="Boolean"/>
+        <attribute name="accuracy" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="Altitude" optional="YES" attributeType="Double" defaultValueString="0.0">
+            <userInfo/>
+        </attribute>
+        <attribute name="Angle" optional="YES" attributeType="Double" defaultValueString="0.0">
+            <userInfo/>
+        </attribute>
+        <attribute name="Comment" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="DateOccured" optional="YES" attributeType="Date">
+            <userInfo/>
+        </attribute>
+        <attribute name="IconID" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="Latitude" optional="YES" attributeType="Double" defaultValueString="0.0">
+            <userInfo/>
+        </attribute>
+        <attribute name="Longitude" optional="YES" attributeType="Double" defaultValueString="0.0">
+            <userInfo/>
+        </attribute>
+        <attribute name="Speed" optional="YES" attributeType="Double" defaultValueString="0.0">
+            <userInfo/>
+        </attribute>
+        <attribute name="TripID" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="uploaded" optional="YES" attributeType="Boolean">
+            <userInfo/>
+        </attribute>
+        <userInfo/>
     </entity>
     <fetchRequest name="GetAllNotUploaded" entity="Location" predicateString="uploaded != 1"/>
     <fetchRequest name="GetAllUploaded" entity="Location" predicateString="uploaded == 1"/>
     <elements>
-        <element name="Icons" positionX="124" positionY="192" width="128" height="60"/>
-        <element name="Location" positionX="-63" positionY="198" width="128" height="195"/>
+        <element name="Icons" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Location" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

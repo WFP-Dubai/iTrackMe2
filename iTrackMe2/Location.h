@@ -12,6 +12,7 @@
 
 @interface Location : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * accuracy;
 @property (nonatomic, retain) NSNumber * Altitude;
 @property (nonatomic, retain) NSNumber * Angle;
 @property (nonatomic, retain) NSString * Comment;

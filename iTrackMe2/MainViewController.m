@@ -112,6 +112,7 @@
     CLLocationAccuracy accuracy = location.horizontalAccuracy;
     CLLocationDegrees latitude = location.coordinate.latitude;
     CLLocationDegrees longitude = location.coordinate.longitude;
+    //CLLocationSpeed speed = location.speed;
     locationLabelLat.text =  [NSString stringWithFormat:@"Lat:%g",latitude] ;
     locationLabelLong.text = [NSString stringWithFormat:@"Long: %g",longitude] ;
 
@@ -308,6 +309,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [dLocation setIconID:@"1"];
     [dLocation setSpeed:@(location.speed)];
     [dLocation setUploaded:@0];
+    [dLocation setAccuracy:@(location.horizontalAccuracy)];
     
     NSError *error = nil;
     if (![[self managedObjectContext] save:&error]) {
@@ -371,8 +373,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     NSString * altitude = [NSString stringWithFormat:@"%@", location.Altitude];
     NSString * angle = [NSString stringWithFormat:@"%@", location.Angle];
     NSString * datedone = [dateFormatter stringFromDate:location.DateOccured];
-    NSString * fullUrl = [NSString stringWithFormat:@"%@requests.php?a=upload&u=%@&p=wfpdubai&lat=%@&long=%@&do=%@&tn=%@&alt=%@&ang=%@&sp=&db=8"
-                          ,baseURL,userName,latitde,longitude,datedone,userName,altitude,angle];
+    NSString * speed = [NSString stringWithFormat:@"%@", location.Speed];
+    NSString * accuracy = [NSString stringWithFormat:@"%@", location.accuracy];
+    
+    NSString * fullUrl = [NSString stringWithFormat:@"%@requests.php?a=upload&u=%@&p=wfpdubai&lat=%@&long=%@&do=%@&tn=%@&alt=%@&ang=%@&sp=%@&acc=%@&db=8"
+                          ,baseURL,userName,latitde,longitude,datedone,userName,altitude,angle,speed,accuracy];
+    
     fullUrl = [fullUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     NSLog(@"%@",fullUrl);
     NSURL * serverUrl =  [NSURL URLWithString:fullUrl];

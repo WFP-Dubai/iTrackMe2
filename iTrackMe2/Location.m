@@ -10,7 +10,7 @@
 
 
 @implementation Location
-
+@dynamic accuracy;
 @dynamic Altitude;
 @dynamic Angle;
 @dynamic Comment;
