@@ -17,11 +17,14 @@
 
 - (id) init {
     self = [super init];
+    
+    AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    int DistanceFilter = [appDelegate.distanceFilter intValue];
     if (self != nil) {
         self.locationManager = [[CLLocationManager alloc] init] ;
         self.locationManager.delegate = self; // send loc updates to myself
-        self.locationManager.distanceFilter = 500;
-        self.locationManager.purpose = @"This is to be able to track your movements, and send them to the TrackMe Server";
+        self.locationManager.distanceFilter = DistanceFilter;
+        self.locationManager.purpose = @"This is needed to be able to track your movements, and send them to the Tracking Server";
         self.locationManager.pausesLocationUpdatesAutomatically = NO;
     }
     return self;

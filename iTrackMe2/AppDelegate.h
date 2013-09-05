@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSString * userName;
 @property (strong,nonatomic) NSString * serverURL;
 @property  (strong,nonatomic) NSNumber * distanceFilter;
-
+@property   (strong,nonatomic) NSNumber * timeDeltaFilter;
+@property   (strong,nonatomic) NSNumber * timeStationaryUpdate;
 
 @end

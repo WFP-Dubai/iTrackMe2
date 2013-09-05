@@ -7,7 +7,7 @@
 //
 
 @import Foundation;
-
+#import "AppDelegate.h"
 
 @protocol MyCLControllerDelegate 
 @required
@@ -22,13 +22,13 @@
  */
 @interface MyCLController : NSObject <CLLocationManagerDelegate> {
     /**
-     The Cre Location Manager
+     The Location Manager
      */
 	CLLocationManager *locationManager;
     id delegate;
 }
 /**
- The Cre Location Manager
+ The Location Manager
  */
 @property (nonatomic, retain) CLLocationManager *locationManager;
 

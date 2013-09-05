@@ -56,9 +56,9 @@
     {
         __managedObjectModel = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectModel] ; 
     }
-    [NSTimer scheduledTimerWithTimeInterval:4
+    [NSTimer scheduledTimerWithTimeInterval:60*60
                                      target:self
-                                   selector:@selector(doData:)
+                                   selector:@selector(locationUpdateTimer:)
                                    userInfo:nil
                                     repeats:NO];
     myQueue = dispatch_queue_create("com.mycompany.myqueue", 0);
@@ -109,6 +109,9 @@
 
 - (void)locationUpdate:(CLLocation *)location 
 {
+
+
+    
     CLLocationAccuracy accuracy = location.horizontalAccuracy;
     CLLocationDegrees latitude = location.coordinate.latitude;
     CLLocationDegrees longitude = location.coordinate.longitude;
@@ -125,9 +128,9 @@
 	span.latitudeDelta=.01;
 	span.longitudeDelta=.01;
 	region.span=span;
-    NSString *SpeedText = [NSString stringWithFormat:@"Speed: %f",location.speed ];
+   // NSString *SpeedText = [NSString stringWithFormat:@"Speed: %f",location.speed ];
     
-    NSLog(@"%@",SpeedText);
+    //NSLog(@"%@",SpeedText);
     [self addEvent];
     [TheMap setRegion:region animated:TRUE];
 }
@@ -268,9 +271,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     UIImage * myImage = info[UIImagePickerControllerOriginalImage];
     if (myImage) {
         saved = [self pushImageToServer:myImage];
-         NSLog(@"Popped %c", saved);
+         //NSLog(@"Popped %c", saved);
     }else{
-        NSLog(@"Popped %@", myImage);
+        //NSLog(@"Popped %@", myImage);
     }
     //Do Image save
 
@@ -282,12 +285,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     // Dismiss the image selection and close the program
     
     [picker dismissModalViewControllerAnimated:YES];
-    NSLog(@"Dissmissed picker");    
+    //NSLog(@"Dissmissed picker");
     
 }
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)Controller{
     
-    NSLog(@"Dissmissed picker"); 
+    //NSLog(@"Dissmissed picker");
     popoverController=nil;
     
 }
@@ -298,11 +301,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     CLLocation *location = locationController.locationManager.location;
     CLLocationCoordinate2D coordinate = [location coordinate];
+    NSDate *date = [location timestamp];
+    
     
     Location *dLocation = (Location *)[NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:[self managedObjectContext]];
     [dLocation setLatitude:@(coordinate.latitude)];
     [dLocation setLongitude:@(coordinate.longitude)];
-    [dLocation setDateOccured:[NSDate date]];
+    [dLocation setDateOccured:date];
     [dLocation setAltitude:@(location.altitude)];
     [dLocation setAngle:@(location.course)];
     [dLocation setComment:@""];
@@ -323,10 +328,35 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
 }
 
--(void)doData:(NSTimer *)timer{}
+-(void)locationUpdateTimer:(NSTimer *)timer{
+    NSLog(@"Timer Fired");    CLLocation *location = locationController.locationManager.location;
+    NSTimeInterval secondsSinceUpdate = -[location timestamp].timeIntervalSinceNow;
+    NSLog(@"%f",secondsSinceUpdate);
+    if ([[NSNumber numberWithDouble:secondsSinceUpdate] intValue]> [appDelegate.timeDeltaFilter intValue]*60 ){
+        NSLog(@"DoIt");
+        [locationController.locationManager stopUpdatingLocation ];
+        [locationController.locationManager startUpdatingLocation ];
+    }else{
+        
+    }
+    
+    [NSTimer scheduledTimerWithTimeInterval:[appDelegate.timeStationaryUpdate intValue]*60
+                                     target:self
+                                   selector:@selector(locationUpdateTimer:)
+                                   userInfo:nil
+                                    repeats:NO];
+}
 
 -(void)sendData
 {
+   /* if(appDelegate.userName == nil){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Username Set"
+                                                        message:@"Your need to set the username in the settings to use the app."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }*/
     NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] init] ;
     [moc setPersistentStoreCoordinator:[[self managedObjectContext] persistentStoreCoordinator]];
     NSManagedObjectModel *mom = [[moc persistentStoreCoordinator] managedObjectModel];
@@ -354,7 +384,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         [eventToDelete.managedObjectContext deleteObject:eventToDelete];
     }
     locationLabelTime.text = [NSString stringWithFormat:@"Last Update: %@",timeStamp];
-    NSLog(@"%@",locationLabelTime.text);
+  //  NSLog(@"%@",locationLabelTime.text);
     [moc  save:&error];
 }
 
@@ -380,7 +410,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
                           ,baseURL,userName,latitde,longitude,datedone,userName,altitude,angle,speed,accuracy];
     
     fullUrl = [fullUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    NSLog(@"%@",fullUrl);
+   // NSLog(@"%@",fullUrl);
     NSURL * serverUrl =  [NSURL URLWithString:fullUrl];
     NSURLRequest *theRequest=[
                               NSURLRequest requestWithURL:serverUrl
@@ -400,7 +430,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 }
 
 - (IBAction)takePhoto:(id)sender {
-  //  [self doData];    
+
 }
 
 - (IBAction)tagLocation:(id)sender {

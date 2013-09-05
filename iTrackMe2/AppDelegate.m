@@ -12,6 +12,10 @@
 
 @implementation AppDelegate
 
+int DefaultDeltaFilter = 1;
+int DefaultStationaryUpdate = 2;
+
+
 @synthesize window = _window;
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
@@ -20,6 +24,8 @@
 @synthesize userName;
 @synthesize serverURL;
 @synthesize distanceFilter;
+@synthesize timeDeltaFilter;
+@synthesize timeStationaryUpdate;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -27,9 +33,12 @@
     // Override point for customization after application launch.
 
     // Register the preference defaults early.
-    NSDictionary *appDefaults = @{@"CacheDataAgressively": @YES};
+    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]]];
+    [self registerDefaultsFromSettingsBundle];
+
+    //NSDictionary *appDefaults = @{@"server_url_preference": @YES};
     
-    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    //[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -39,7 +48,10 @@
     
     [self setDistanceFilter:[defaults objectForKey:@"updateDistance"]];
     
-    [defaults registerDefaults:appDefaults];
+    [self setTimeDeltaFilter:[NSNumber numberWithInt:DefaultDeltaFilter]];
+    [self setTimeStationaryUpdate:[NSNumber numberWithInt:DefaultStationaryUpdate]];
+    
+    //[defaults registerDefaults:appDefaults];
     [defaults synchronize];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -159,6 +171,27 @@
     }    
     
     return __persistentStoreCoordinator;
+}
+
+- (void)registerDefaultsFromSettingsBundle {
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle) {
+        NSLog(@"Could not find Settings.bundle");
+        return;
+    }
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
+    for(NSDictionary *prefSpecification in preferences) {
+        NSString *key = [prefSpecification objectForKey:@"Key"];
+        if(key && [[prefSpecification allKeys] containsObject:@"DefaultValue"]) {
+            [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
 }
 
 #pragma mark - Application's Documents directory
