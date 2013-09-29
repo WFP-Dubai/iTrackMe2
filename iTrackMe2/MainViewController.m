@@ -20,6 +20,7 @@
 
 
 
+
 - (id)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
@@ -56,7 +57,7 @@
     {
         __managedObjectModel = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectModel] ; 
     }
-    [NSTimer scheduledTimerWithTimeInterval:60*60
+    [NSTimer scheduledTimerWithTimeInterval:60
                                      target:self
                                    selector:@selector(locationUpdateTimer:)
                                    userInfo:nil
@@ -109,28 +110,50 @@
 
 - (void)locationUpdate:(CLLocation *)location 
 {
-
-
-    
+   
     CLLocationAccuracy accuracy = location.horizontalAccuracy;
     CLLocationDegrees latitude = location.coordinate.latitude;
     CLLocationDegrees longitude = location.coordinate.longitude;
-    //CLLocationSpeed speed = location.speed;
-    locationLabelLat.text =  [NSString stringWithFormat:@"Lat:%g",latitude] ;
-    locationLabelLong.text = [NSString stringWithFormat:@"Long: %g",longitude] ;
 
+    locationLabelLat.text =  [NSString stringWithFormat:@"Lat: %g",latitude] ;
+    locationLabelLong.text = [NSString stringWithFormat:@"Long: %g",longitude] ;
     precisionLable.text =    [NSString stringWithFormat:@"±%.0fm",accuracy];
     
-    
+    // TODO: Add Distance and Speed change
+
     MKCoordinateRegion region;
 	region.center=location.coordinate;
     MKCoordinateSpan span;
 	span.latitudeDelta=.01;
 	span.longitudeDelta=.01;
 	region.span=span;
-   // NSString *SpeedText = [NSString stringWithFormat:@"Speed: %f",location.speed ];
+    if (location.speed <= 20 ){
+        NSLog(@"Walking");
+        NSLog(@"%f",locationController.locationManager.distanceFilter);
+        if(locationController.locationManager.distanceFilter != 100){
+            locationController.locationManager.distanceFilter = 100;
+            [appDelegate setTimeStationaryUpdate:@5];
+            [appDelegate setTimeDeltaFilter:@2];
+        }
+        
+    }else if (location.speed > 20 && location.speed < 60){
+        NSLog(@"Speeding");
+        NSLog(@"%f",locationController.locationManager.distanceFilter);
+        if(locationController.locationManager.distanceFilter != 500){
+            locationController.locationManager.distanceFilter = 500;
+            [appDelegate setTimeStationaryUpdate:@15];
+            [appDelegate setTimeDeltaFilter:@7];
+        }
+    }else if (location.speed >= 60){
+        NSLog(@"Speeding");
+        NSLog(@"%f",locationController.locationManager.distanceFilter);
+        if(locationController.locationManager.distanceFilter != 2000){
+            locationController.locationManager.distanceFilter = 2000;
+            [appDelegate setTimeStationaryUpdate:@5];
+            [appDelegate setTimeDeltaFilter:@2];
+        }
+    }
     
-    //NSLog(@"%@",SpeedText);
     [self addEvent];
     [TheMap setRegion:region animated:TRUE];
 }
@@ -142,15 +165,11 @@
 
 - (IBAction)locationToggle:(id)sender
 {
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    double testValue = 1400.0;
     
     if (!locationController.running)
     {
         startStopButton.title=@"Stop";
         [TheMap setShowsUserLocation:YES];
-//        [defaults setFloat:testValue forKey:@"updateDistance"];
-//        [defaults synchronize];
     }else{
         startStopButton.title=@"Start";
         [TheMap setShowsUserLocation:NO];
@@ -186,7 +205,8 @@
         //        [(UIBarButtonItem *)sender setEnabled:NO];
     }else{
         
-        [self presentModalViewController:picker animated:YES];
+        [self presentViewController:picker animated:YES completion:nil];
+        
     }
     if(ran){
         [locationController locationToggler];
@@ -267,7 +287,7 @@
 didFinishPickingMediaWithInfo:(NSDictionary *)info 
 {
     BOOL saved = NO;
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage * myImage = info[UIImagePickerControllerOriginalImage];
     if (myImage) {
         saved = [self pushImageToServer:myImage];
@@ -284,7 +304,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     // Dismiss the image selection and close the program
     
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
     //NSLog(@"Dissmissed picker");
     
 }
@@ -302,7 +322,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     CLLocation *location = locationController.locationManager.location;
     CLLocationCoordinate2D coordinate = [location coordinate];
     NSDate *date = [location timestamp];
-    
+    NSNumber *speed = @(location.speed);
+    if ([speed   isEqual: @-1]){
+        speed = @0;
+    }
     
     Location *dLocation = (Location *)[NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:[self managedObjectContext]];
     [dLocation setLatitude:@(coordinate.latitude)];
@@ -312,10 +335,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [dLocation setAngle:@(location.course)];
     [dLocation setComment:@""];
     [dLocation setIconID:@"1"];
-    [dLocation setSpeed:@(location.speed)];
+    [dLocation setSpeed:speed];
     [dLocation setUploaded:@0];
     [dLocation setAccuracy:@(location.horizontalAccuracy)];
-    
+
     NSError *error = nil;
     if (![[self managedObjectContext] save:&error]) {
         // Handle the error.
@@ -329,11 +352,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 }
 
 -(void)locationUpdateTimer:(NSTimer *)timer{
-    NSLog(@"Timer Fired");    CLLocation *location = locationController.locationManager.location;
+    NSLog(@"Timer Fired");
+    
+    CLLocation *location = locationController.locationManager.location;
     NSTimeInterval secondsSinceUpdate = -[location timestamp].timeIntervalSinceNow;
     NSLog(@"%f",secondsSinceUpdate);
-    if ([[NSNumber numberWithDouble:secondsSinceUpdate] intValue]> [appDelegate.timeDeltaFilter intValue]*60 ){
-        NSLog(@"DoIt");
+    if ([@(secondsSinceUpdate) intValue]> [appDelegate.timeDeltaFilter intValue]*60 ){
+        NSLog(@"Do It");
         [locationController.locationManager stopUpdatingLocation ];
         [locationController.locationManager startUpdatingLocation ];
     }else{

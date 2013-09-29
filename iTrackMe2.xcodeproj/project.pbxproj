@@ -39,6 +39,7 @@
 		287A54EC13FBE3ED001CFEEC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287A54EB13FBE3ED001CFEEC /* MapKit.framework */; };
 		28835A421621553A0089265E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28835A411621553A0089265E /* Default-568h@2x.png */; };
 		2886605914011C9300B6EA0A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2886605814011C9300B6EA0A /* Settings.bundle */; };
+		288C1E7817F837EF004B702A /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 288C1E7717F837EF004B702A /* Storyboard_iPhone.storyboard */; };
 		28AB9D04146BF2940040AF31 /* 360.png in Resources */ = {isa = PBXBuildFile; fileRef = 28AB9D02146BF2940040AF31 /* 360.png */; };
 		28AB9D05146BF2940040AF31 /* Zero.png in Resources */ = {isa = PBXBuildFile; fileRef = 28AB9D03146BF2940040AF31 /* Zero.png */; };
 		28B05FDE17BB9CF700F189E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28B05FDD17BB9CF700F189E3 /* Images.xcassets */; };
@@ -98,6 +99,7 @@
 		2880B0311403805B0081B94D /* iTrackMe 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "iTrackMe 2.xcdatamodel"; sourceTree = "<group>"; };
 		28835A411621553A0089265E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
 		2886605814011C9300B6EA0A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		288C1E7717F837EF004B702A /* Storyboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
 		28AB9D02146BF2940040AF31 /* 360.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 360.png; path = images/360.png; sourceTree = "<group>"; };
 		28AB9D03146BF2940040AF31 /* Zero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Zero.png; path = images/Zero.png; sourceTree = "<group>"; };
 		28B05FDD17BB9CF700F189E3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "EPIC TrackMe/Images.xcassets"; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 		2818191C13FB9C70007F4D44 /* iTrackMe2 */ = {
 			isa = PBXGroup;
 			children = (
+				288C1E7717F837EF004B702A /* Storyboard_iPhone.storyboard */,
 				2818192513FB9C70007F4D44 /* AppDelegate.h */,
 				2818192613FB9C70007F4D44 /* AppDelegate.m */,
 				28395E9C13FCF88300F04B7B /* MyCLController.h */,
@@ -338,6 +341,7 @@
 				282BFF4215CE89210086AF62 /* Icon-Small@2x.png in Resources */,
 				282BFF4315CE89210086AF62 /* Icon.png in Resources */,
 				282BFF4415CE89210086AF62 /* Icon@2x.png in Resources */,
+				288C1E7817F837EF004B702A /* Storyboard_iPhone.storyboard in Resources */,
 				28835A421621553A0089265E /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,15 +462,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTrackMe2/iTrackMe2-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "iTrackMe2/iTrackMe2-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "93EC0BB1-AEB2-4987-B086-5CB795993378";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;
@@ -546,15 +550,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTrackMe2/iTrackMe2-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "iTrackMe2/iTrackMe2-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "93EC0BB1-AEB2-4987-B086-5CB795993378";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -564,15 +568,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTrackMe2/iTrackMe2-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "iTrackMe2/iTrackMe2-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "93EC0BB1-AEB2-4987-B086-5CB795993378";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -24,7 +24,7 @@
         self.locationManager = [[CLLocationManager alloc] init] ;
         self.locationManager.delegate = self; // send loc updates to myself
         self.locationManager.distanceFilter = DistanceFilter;
-        self.locationManager.purpose = @"This is needed to be able to track your movements, and send them to the Tracking Server";
+//        self.locationManager.purpose = @"This is needed to be able to track your movements, and send them to the Tracking Server";
         self.locationManager.pausesLocationUpdatesAutomatically = NO;
     }
     return self;

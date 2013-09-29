@@ -31,4 +31,13 @@
 @property   (strong,nonatomic) NSNumber * timeDeltaFilter;
 @property   (strong,nonatomic) NSNumber * timeStationaryUpdate;
 
+/* Walk Slow Fast / Timer DistanceFilter */
+@property   (strong,nonatomic) NSNumber * WalkTimer;
+@property   (strong,nonatomic) NSNumber * SlowTimer;
+@property   (strong,nonatomic) NSNumber * FastTimer;
+@property   (strong,nonatomic) NSNumber * WalkDistanceFilter;
+@property   (strong,nonatomic) NSNumber * SlowDistanceFilter;
+@property   (strong,nonatomic) NSNumber * FastDistanceFilter;
+
+
 @end

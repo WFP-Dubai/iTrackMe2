@@ -16,6 +16,7 @@ int DefaultDeltaFilter = 1;
 int DefaultStationaryUpdate = 2;
 
 
+
 @synthesize window = _window;
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
@@ -26,6 +27,15 @@ int DefaultStationaryUpdate = 2;
 @synthesize distanceFilter;
 @synthesize timeDeltaFilter;
 @synthesize timeStationaryUpdate;
+
+/* Walk Slow Fast / Timer DistanceFilter */
+@synthesize WalkTimer;
+@synthesize SlowTimer;
+@synthesize FastTimer;
+@synthesize WalkDistanceFilter;
+@synthesize SlowDistanceFilter;
+@synthesize FastDistanceFilter;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -48,10 +58,11 @@ int DefaultStationaryUpdate = 2;
     
     [self setDistanceFilter:[defaults objectForKey:@"updateDistance"]];
     
-    [self setTimeDeltaFilter:[NSNumber numberWithInt:DefaultDeltaFilter]];
-    [self setTimeStationaryUpdate:[NSNumber numberWithInt:DefaultStationaryUpdate]];
+    [self setTimeDeltaFilter:@(DefaultDeltaFilter)];
     
-    //[defaults registerDefaults:appDefaults];
+    [self setTimeStationaryUpdate:@(DefaultStationaryUpdate)];
+    
+    
     [defaults synchronize];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -181,13 +192,13 @@ int DefaultStationaryUpdate = 2;
     }
     
     NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
-    NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+    NSArray *preferences = settings[@"PreferenceSpecifiers"];
     
     NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
     for(NSDictionary *prefSpecification in preferences) {
-        NSString *key = [prefSpecification objectForKey:@"Key"];
+        NSString *key = prefSpecification[@"Key"];
         if(key && [[prefSpecification allKeys] containsObject:@"DefaultValue"]) {
-            [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+            defaultsToRegister[key] = prefSpecification[@"DefaultValue"];
         }
     }
     
