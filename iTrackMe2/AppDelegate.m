@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 
 #import "MainViewController.h"
+#import <Crashlytics/Crashlytics.h>
+
 
 @implementation AppDelegate
 
@@ -41,6 +43,7 @@ int DefaultStationaryUpdate = 2;
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [Crashlytics startWithAPIKey:@"c82cda868da3c41b94474050e132e3e741fc40ca"];
 
     // Register the preference defaults early.
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]]];

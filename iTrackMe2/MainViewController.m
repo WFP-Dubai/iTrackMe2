@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation MainViewController
 @synthesize uploadPhotoButton;
@@ -306,6 +307,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     [picker dismissViewControllerAnimated:YES completion:nil];
     //NSLog(@"Dissmissed picker");
+    [[Crashlytics sharedInstance] crash];
     
 }
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)Controller{

@@ -43,6 +43,7 @@
 		28AB9D04146BF2940040AF31 /* 360.png in Resources */ = {isa = PBXBuildFile; fileRef = 28AB9D02146BF2940040AF31 /* 360.png */; };
 		28AB9D05146BF2940040AF31 /* Zero.png in Resources */ = {isa = PBXBuildFile; fileRef = 28AB9D03146BF2940040AF31 /* Zero.png */; };
 		28B05FDE17BB9CF700F189E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28B05FDD17BB9CF700F189E3 /* Images.xcassets */; };
+		F6E680C9184DA99E006BAFD3 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6E680C8184DA99E006BAFD3 /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		28B543FB142A06F900318A72 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		28B543FD142A071400318A72 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
 		28DF3A1014027B0900503662 /* iTrackMe 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "iTrackMe 2.xcdatamodel"; sourceTree = "<group>"; };
+		F6E680C8184DA99E006BAFD3 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				2818191713FB9C70007F4D44 /* UIKit.framework in Frameworks */,
 				2818191913FB9C70007F4D44 /* Foundation.framework in Frameworks */,
 				2818191B13FB9C70007F4D44 /* CoreData.framework in Frameworks */,
+				F6E680C9184DA99E006BAFD3 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +163,7 @@
 		2818191513FB9C70007F4D44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F6E680C8184DA99E006BAFD3 /* Crashlytics.framework */,
 				28790199140BAAF2000872FF /* SystemConfiguration.framework */,
 				287A54EB13FBE3ED001CFEEC /* MapKit.framework */,
 				2818194213FB9CDE007F4D44 /* CoreLocation.framework */,
@@ -258,6 +262,7 @@
 				2818190E13FB9C70007F4D44 /* Sources */,
 				2818190F13FB9C70007F4D44 /* Frameworks */,
 				2818191013FB9C70007F4D44 /* Resources */,
+				F6E680C7184DA8A8006BAFD3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -355,6 +360,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F6E680C7184DA8A8006BAFD3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run c82cda868da3c41b94474050e132e3e741fc40ca";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2818190E13FB9C70007F4D44 /* Sources */ = {
@@ -464,6 +485,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/tobias/Dropbox/github/iTrackMe2,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTrackMe2/iTrackMe2-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -552,6 +577,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/tobias/Dropbox/github/iTrackMe2,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTrackMe2/iTrackMe2-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -570,6 +599,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/tobias/Dropbox/github/iTrackMe2,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTrackMe2/iTrackMe2-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
